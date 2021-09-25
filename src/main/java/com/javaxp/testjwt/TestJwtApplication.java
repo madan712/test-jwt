@@ -28,7 +28,7 @@ public class TestJwtApplication implements CommandLineRunner {
 		String token = jwtTokenService.generateToken(user1);
 		System.out.println(token);
 
-		System.out.println(jwtTokenService.validateToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XCJ1c2VySWRcIjoxMSxcImZpcnN0TmFtZVwiOlwiZm9vXCIsXCJsYXN0TmFtZVwiOlwiYmFyXCIsXCJlbWFpbFwiOlwidGVzdEB0ZXN0LmNvbVwifSIsImlhdCI6MTYzMjU5MTMzMywiZXhwIjoxNjMyNTk0OTMzLCJpc3MiOiJqYXZheHAuY29tIn0.29GZ8x5B5s7SWvdfOTNG_OfRry-PHtWtmQsibBdPRk1zGCxOVYRdZ1bXzEJmVI0hd0r1BHz-mOfan1EW_e8Ndw"));
+		System.out.println(jwtTokenService.validateToken(token));
 
 		User user2 = jwtTokenService.getUserFromToken(token);
 		System.out.println(user2);
