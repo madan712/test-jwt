@@ -26,6 +26,13 @@ public class JwtTokenService {
 
 	private final ObjectMapper mapper = new ObjectMapper();
 
+	public String generateToken(User user) throws JsonProcessingException {
+		String userStr = mapper.writeValueAsString(user);
+		return Jwts.builder().setSubject(userStr).setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
+				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+	}
+
 	public boolean validateToken(String authToken) {
 		try {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
@@ -42,13 +49,6 @@ public class JwtTokenService {
 			System.err.println("JWT claims string is empty.");
 		}
 		return false;
-	}
-
-	public String generateToken(User user) throws JsonProcessingException {
-		String userStr = mapper.writeValueAsString(user);
-		return Jwts.builder().setSubject(userStr).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
-				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
 	public User getUserFromToken(String token) throws JsonMappingException, JsonProcessingException {
